@@ -2,38 +2,38 @@
 import { useState } from "react"
 
 interface Product {
-  title: string;
+  productName: string;
   price: string;
 }
 
 const productList = [
   {
-    title: 'Macarrão',
+    productName: 'Macarrão',
     price: 'R$ 25,00'
   },
   {
-    title: 'Hamburger',
+    productName: 'Hamburger',
     price: 'R$ 30,00'
   }
 ]
 
-export function ListProduto() {
-  const [filteredProdutos, setFilteredProdutos] = useState<Product[]>([])
+export function ProductList() {
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
 
-  function searchProduto(search: string) {
-    const filtrado = productList.filter(product => product.title.includes(search))
+  function handleFindByProduct(productNameEnteredByUser: string) {
+    const productFilteredFromList = productList.filter(product => product.productName.includes(productNameEnteredByUser))
 
-    setFilteredProdutos(filtrado)
+    setFilteredProducts(productFilteredFromList)
   }
 
   return (
     <div>
-      <input type="text" onChange={(e) => searchProduto(e.target.value)} />
+      <input type="text" onChange={(e) => handleFindByProduct(e.target.value)} />
 
-      {filteredProdutos.map(produto => (
+      {filteredProducts.map(product => (
         <div>
-          <p>{produto.title}</p>
-          <p>{produto.price}</p>
+          <p>{product.productName}</p>
+          <p>{product.price}</p>
         </div>
       ))}
     </div>

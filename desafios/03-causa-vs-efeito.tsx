@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 interface User {
   name: string;
-  github: string;
+  gitHubAddress: string;
 }
 
 function fetchUser() {
@@ -11,38 +11,38 @@ function fetchUser() {
     data: {
       user: {
         name: 'Joseph Oliveira',
-        github: 'https://github.com/josepholiveira'
+        gitHubAddress: 'https://github.com/josepholiveira'
       }
     }
   }
 }
 
 export function UserProfile() {
-  const [shouldNotRenderUserName, setShouldNotRenderUserName] = useState(false)
-  const [userData, setUserData] = useState<User>()
+  const [isUserNameLoading, setIsUserNameLoading] = useState(false)
+  const [userGitHubData, setUserGitHubData] = useState<User>()
 
   useEffect(() => {
     function loadUser() {
-      setShouldNotRenderUserName(true)
+      setIsUserNameLoading(true)
 
-      const fetchUserResponse = fetchUser()
+      const fetchUserResponseData = fetchUser()
 
-      setUserData(fetchUserResponse.data.user)
+      setUserGitHubData(fetchUserResponseData.data.user)
       
-      setShouldNotRenderUserName(false)
+      setIsUserNameLoading(false)
     }
 
     loadUser()
   })
 
-  if (shouldNotRenderUserName) {
+  if (isUserNameLoading) {
     return <p>Loading...</p>
   }
 
   return (
     <div>
-      <img src={`${userData?.github}.png`} alt="" />
-      <a href={userData?.github}>{userData?.name}</a>
+      <img src={`${userGitHubData?.github}.png`} alt="" />
+      <a href={userGitHubData?.gitHubAddress}>{userGitHubData?.name}</a>
     </div>
   )
 }
