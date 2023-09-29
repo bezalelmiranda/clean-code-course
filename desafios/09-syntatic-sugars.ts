@@ -1,26 +1,30 @@
-function getFirstFiveRatings(ratings) {
-  return ratings.length >= 5 && ratings.slice(0, 5)
+function getFirstFiveRatings(appRatingsValuesList) {
+  return appRatingsValuesList.length >= 5 && appRatingsValuesList.slice(0, 5)
 }
 
-function sumFirstFiveRatings(ratings) {
-  const ratingsBool = !!ratings
+function sumFirstFiveRatings(appRatingsValuesListInString: string[]) {
+  const isRankingListNotNull = Boolean(appRatingsValuesListInString)
 
-  if (ratingsBool) {
-    const firstFiveRatings = getFirstFiveRatings(ratings)
+  if (isRankingListNotNull) {
 
-    if (!firstFiveRatings) return { error: 'there must be at least 5 ratings' }
+    const hasFirstFiveRatings = getFirstFiveRatings(appRatingsValuesListInString)
 
-    let ratingsSum = 0;
+    if (hasFirstFiveRatings) {
 
-    for (const rating of firstFiveRatings) {
-      ratingsSum += +rating
+      let appRatingsSum = 0;
+
+      for (const rating of hasFirstFiveRatings) {
+        appRatingsSum += Number(rating)
+      }
+
+      return { appRatingsSum, created_at: Number(new Date()) }
     }
-
-    return { ratingsSum, created_at: +new Date() }
+    
+    return { error: 'there must be at least 5 ratings' }
   }
 
   return { error: 'ratings is required' }
 }
 
-const appRatings = ['5', '3', '4', '4', '5', '1', '5', '4', '4', '3']
-sumFirstFiveRatings(appRatings)
+const appRatingsValuesListInString = ['5', '3', '4', '4', '5', '1', '5', '4', '4', '3']
+sumFirstFiveRatings(appRatingsValuesListInString)
